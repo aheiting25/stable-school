@@ -1,0 +1,74 @@
+---
+title: "Data Analysis: Stable School"
+author: 'Anna Heiting'
+output:
+  html_document: default
+--- 
+
+```{r data-and-packages}
+#install.packages("tidyverse")
+library(tidyverse)
+#install.packages("readxl")
+library(readxl)
+#install.packages("googlesheets4")
+library(googlesheets4)
+#install.packages("likert")
+library(likert)
+
+sheet_url <- "https://docs.google.com/spreadsheets/d/1ztEGQVx6-yxLz587DlWl6xOpdQvGJrqjYMRathBrU18/edit?usp=sharing"
+
+# List all sheets in the Google Sheets document
+sheets <- sheet_names(sheet_url)
+
+# Read each sheet into a separate data frame
+All <- read_sheet(sheet_url, sheet = sheets[1])
+Q8dt <- read_sheet(sheet_url, sheet = sheets[2])
+Q8eng <- read_sheet(sheet_url, sheet = sheets[3])
+```
+
+``` {r convert-to-factor}
+#All questions
+#deutsch
+All_dt_factor <- All %>%
+  na.omit() %>%
+  as.data.frame() %>%
+  mutate(across(everything(), 
+                ~ factor(.x, 
+                          levels = c(5, 4, 3, 2, 1), 
+                          labels = c("Stimme gar nicht zu", "Stimme nicht zu", "Neutral", "Stimme zu", "Stimme sehr zu"))))
+
+#english
+All_eng_factor <- All %>%
+  mutate(across(everything(), 
+                ~ factor(.x, 
+                          levels = c(5, 4, 3, 2, 1), 
+                          labels = c("Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"))))
+
+
+#Question 8
+#deutsch
+Q8dt_factor <- Q8dt %>%
+  mutate(across(everything(), 
+                ~ factor(.x, 
+                          levels = c(5, 4, 3, 2, 1), 
+                          labels = c("Stimme gar nicht zu", "Stimme nicht zu", "Neutral", "Stimme zu", "Stimme sehr zu"))))
+
+#english
+Q8eng_factor <- Q8eng %>%
+  mutate(across(everything(), 
+                ~ factor(.x, 
+                          levels = c(5, 4, 3, 2, 1), 
+                          labels = c("Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"))))
+```
+
+``` {r likert-All_dt_factor}
+likert_All_dt <- likert(All_dt_factor, nlevels = 5) %>%
+  summary() %>%
+  as.data.frame()
+```
+
+
+diverging stacked bar plot
+y = items(questions)
+fill = count of responses
+
