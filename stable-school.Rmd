@@ -24,6 +24,7 @@ sheets <- sheet_names(sheet_url)
 All <- read_sheet(sheet_url, sheet = sheets[1])
 Q8dt <- read_sheet(sheet_url, sheet = sheets[2])
 Q8eng <- read_sheet(sheet_url, sheet = sheets[3])
+All_count_per <- read_sheet(sheet_url, sheet = sheets[5])
 ```
 
 ``` {r convert-to-factor}
@@ -68,7 +69,8 @@ likert_All_dt <- likert(All_dt_factor, nlevels = 5) %>%
 ```
 
 
-diverging stacked bar plot
-y = items(questions)
-fill = count of responses
 
+``` {r likert plot}
+All_likert <- likert(Item~., All_count_per)
+plot(All_likert)
+```
