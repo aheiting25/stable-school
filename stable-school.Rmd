@@ -68,9 +68,53 @@ likert_All_dt <- likert(All_dt_factor, nlevels = 5) %>%
   as.data.frame()
 ```
 
+Likert bar plots in English
 
-
-``` {r likert plot}
+``` {r likert-plot-all-questions}
 All_likert <- likert(Item~., All_count_per)
-plot(All_likert)
+plot(All_likert, ylab = "Question")
+```
+
+```{r likert-plot-1.3}
+Per1.3 <- subset(All_count_per, Item == "How did you like the concept 'Stable School'?")
+
+likert1.3 <- likert(Item~., Per1.3)
+
+plot(likert1.3)
+```
+
+```{r likert-plot-1.4-1.6}
+Per1.4_1.6 <- subset(All_count_per, Item %in% c("How high do you estimate, was the benefit of the 'Stable School' regarding calf health on your farm?", 
+                                                "How high do you estimate, was the benefit of the 'Stable School' regarding employee management and efficiency on your farm?", 
+                                                "How high do you estimate, was the benefit of the 'Stable School' in general on your farm?"))
+
+likert1.4_1.6 <- likert(Item~., Per1.4_1.6)
+
+plot(likert1.4_1.6)
+```
+
+```{r likert-plot-1.9-1.10}
+Per1.9_1.10 <- subset(All_count_per, Item %in% c("Would you say that the 'Stable School' increased your awareness regarding calf health problems on the farm?", 
+                                                "Would you say that the 'Stable School' increased your awareness regarding employee management problems on the farm?"))
+
+likert1.9_1.10 <- likert(Item~., Per1.9_1.10)
+
+plot(likert1.9_1.10)
+```
+
+```{r likert-plot-2.1-2.2}
+Per2.1_2.2 <- subset(All_count_per, Item %in% c("In comparison to other advising services, how motivating was the 'Stable School' for you to change the calf health situation on your farm?", 
+                                                "In comparison to other advising services, how motivating was the 'Stable School' for you to change the employee management situation on your farm?"))
+
+likert2.1_2.2 <- likert(Item~., Per2.1_2.2)
+
+plot(likert2.1_2.2)
+```
+
+```{r likert-plot-2.9}
+Per2.9 <- subset(All_count_per, Item == "How important was the social aspect of the 'Stable School' for you?")
+
+likert2.9 <- likert(Item~., Per2.9)
+
+plot(likert2.9)
 ```
