@@ -25,6 +25,7 @@ All <- read_sheet(sheet_url, sheet = sheets[1])
 Q8dt <- read_sheet(sheet_url, sheet = sheets[2])
 Q8eng <- read_sheet(sheet_url, sheet = sheets[3])
 All_count_per <- read_sheet(sheet_url, sheet = sheets[5])
+All_count_per_dt <- read_sheet(sheet_url, sheet = sheets[6])
 ```
 
 ``` {r convert-to-factor}
@@ -117,4 +118,57 @@ Per2.9 <- subset(All_count_per, Item == "How important was the social aspect of 
 likert2.9 <- likert(Item~., Per2.9)
 
 plot(likert2.9)
+```
+
+
+
+Likert bar plots in deutsch
+
+``` {r likert-plot-all-questions-dt}
+All_likert_dt <- likert(Item~., All_count_per_dt)
+plot(All_likert_dt, ylab = "Question")
+```
+
+```{r likert-plot-1.3_dt}
+Per1.3_dt <- subset(All_count_per_dt, Item == "Wie gefiel Ihnen grundsätzlich der hier im Projekt gewählte Ansatz?")
+
+likert1.3_dt <- likert(Item~., Per1.3_dt)
+
+plot(likert1.3_dt)
+```
+
+```{r likert-plot-1.4-1.6_dt}
+Per1.4_1.6_dt <- subset(All_count_per_dt, Item %in% c("Wie hoch würden Sie den Nutzen von der 'Stallschule' im Hinblick auf die Verbesserung der Kälbergesundheit im eigenen Betrieb einschätzen?", 
+                                                "Wie hoch würden Sie den Nutzen von der 'Stallschule' im Hinblick auf die Verbesserung der Mitarbeiterführung im eigenen Betrieb einschätzen?", 
+                                                "Wie hoch würden Sie den Nutzen von der 'Stallschule im Allgemeinen für Ihren eigenen Betrieb einschätzen?"))
+
+likert1.4_1.6_dt <- likert(Item~., Per1.4_1.6_dt)
+
+plot(likert1.4_1.6_dt)
+```
+
+```{r likert-plot-1.9-1.10_dt}
+Per1.9_1.10_dt <- subset(All_count_per_dt, Item %in% c("Würden Sie sagen, dass Ihr Problembewusstsein bzgl. der Kälbergesundheitssituation im Betrieb über die Teilnahme an den 'Stallschule'-Treffen gefördert wurde?", 
+                                                "Würden Sie sagen, dass Ihr Problembewusstsein bzgl. der Mitarbeiterführungssituation im Betrieb über die Teilnahme an den 'Stallschule'-Treffen gefördert wurde?"))
+
+likert1.9_1.10_dt <- likert(Item~., Per1.9_1.10_dt)
+
+plot(likert1.9_1.10_dt)
+```
+
+```{r likert-plot-2.1-2.2_dt}
+Per2.1_2.2_dt <- subset(All_count_per_dt, Item %in% c("Im Vergleich mit anderen Beratungsmöglichkeiten zur Verbesserung der Kälbergesundheitssituation: Wie motivierend bewerten Sie das Instrument 'Stallschule'?", 
+                                                "Im Vergleich mit anderen Beratungsmöglichkeiten zur Verbesserung der Mitarbeiterführungssituation: Wie motivierend bewerten Sie das Instrument 'Stallschule'?"))
+
+likert2.1_2.2_dt <- likert(Item~., Per2.1_2.2_dt)
+
+plot(likert2.1_2.2_dt)
+```
+
+```{r likert-plot-2.9_dt}
+Per2.9_dt <- subset(All_count_per_dt, Item == "Wie wichtig war für Sie der soziale Aspekt der 'Stallschule'?")
+
+likert2.9_dt <- likert(Item~., Per2.9_dt)
+
+plot(likert2.9_dt)
 ```
