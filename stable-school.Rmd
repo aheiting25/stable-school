@@ -69,7 +69,7 @@ likert_All_dt <- likert(All_dt_factor, nlevels = 5) %>%
   as.data.frame()
 ```
 
-Likert bar plots in English
+<b>Likert bar plots in English</b>
 
 ``` {r likert-plot-all-questions}
 All_likert <- likert(Item~., All_count_per)
@@ -77,7 +77,11 @@ plot(All_likert, ylab = "Question")
 ```
 
 ```{r likert-plot-1.3}
-Per1.3 <- subset(All_count_per, Item == "How did you like the concept 'Stable School'?")
+Per1.3 <- subset(All_count_per, Item == "How did you like the concept 'Stable School'?") %>%
+  rename('Very bad' = 'Strongly Disagree', 
+         'Bad' = 'Disagree', 
+         'Good' = 'Agree', 
+         'Very good' = 'Strongly agree')
 
 likert1.3 <- likert(Item~., Per1.3)
 
@@ -87,11 +91,21 @@ plot(likert1.3)
 ```{r likert-plot-1.4-1.6}
 Per1.4_1.6 <- subset(All_count_per, Item %in% c("How high do you estimate, was the benefit of the 'Stable School' regarding calf health on your farm?", 
                                                 "How high do you estimate, was the benefit of the 'Stable School' regarding employee management and efficiency on your farm?", 
-                                                "How high do you estimate, was the benefit of the 'Stable School' in general on your farm?"))
+                                                "How high do you estimate, was the benefit of the 'Stable School' in general on your farm?")) %>%
+  rename('Useless' = 'Strongly Disagree', 
+         'Low use' = 'Disagree', 
+         'Useful' = 'Agree', 
+         'Very useful' = 'Strongly agree')
 
 likert1.4_1.6 <- likert(Item~., Per1.4_1.6)
 
 plot(likert1.4_1.6)
+```
+
+```{r likert-plot-1.8}
+likert1.8 <- likert(Item~., Q8eng)
+
+plot(likert1.8)
 ```
 
 ```{r likert-plot-1.9-1.10}
@@ -105,7 +119,11 @@ plot(likert1.9_1.10)
 
 ```{r likert-plot-2.1-2.2}
 Per2.1_2.2 <- subset(All_count_per, Item %in% c("In comparison to other advising services, how motivating was the 'Stable School' for you to change the calf health situation on your farm?", 
-                                                "In comparison to other advising services, how motivating was the 'Stable School' for you to change the employee management situation on your farm?"))
+                                                "In comparison to other advising services, how motivating was the 'Stable School' for you to change the employee management situation on your farm?")) %>%
+  rename('Demotivating' = 'Strongly Disagree', 
+         'Less motivating' = 'Disagree', 
+         'Motivating' = 'Agree', 
+         'Very motivating' = 'Strongly agree')
 
 likert2.1_2.2 <- likert(Item~., Per2.1_2.2)
 
@@ -113,7 +131,11 @@ plot(likert2.1_2.2)
 ```
 
 ```{r likert-plot-2.9}
-Per2.9 <- subset(All_count_per, Item == "How important was the social aspect of the 'Stable School' for you?")
+Per2.9 <- subset(All_count_per, Item == "How important was the social aspect of the 'Stable School' for you?") %>%
+  rename('Unimportant' = 'Strongly Disagree', 
+         'Very unimportant' = 'Disagree', 
+         'Important' = 'Agree', 
+         'Very important' = 'Strongly agree')
 
 likert2.9 <- likert(Item~., Per2.9)
 
@@ -122,7 +144,7 @@ plot(likert2.9)
 
 
 
-Likert bar plots in deutsch
+<b>Likert bar plots auf deutsch</b>
 
 ``` {r likert-plot-all-questions-dt}
 All_likert_dt <- likert(Item~., All_count_per_dt)
@@ -130,7 +152,11 @@ plot(All_likert_dt, ylab = "Question")
 ```
 
 ```{r likert-plot-1.3_dt}
-Per1.3_dt <- subset(All_count_per_dt, Item == "Wie gefiel Ihnen grundsätzlich der hier im Projekt gewählte Ansatz?")
+Per1.3_dt <- subset(All_count_per_dt, Item == "Wie gefiel Ihnen grundsätzlich der hier im Projekt gewählte Ansatz?") %>%
+  rename('Sehr schlecht' = 'Stimme gar nicht zu', 
+         Schlecht = 'Stimme nicht zu', 
+         Gut = 'Stimme zu', 
+         'Sehr gut' = 'Stimme sehr zu')
 
 likert1.3_dt <- likert(Item~., Per1.3_dt)
 
@@ -140,16 +166,34 @@ plot(likert1.3_dt)
 ```{r likert-plot-1.4-1.6_dt}
 Per1.4_1.6_dt <- subset(All_count_per_dt, Item %in% c("Wie hoch würden Sie den Nutzen von der 'Stallschule' im Hinblick auf die Verbesserung der Kälbergesundheit im eigenen Betrieb einschätzen?", 
                                                 "Wie hoch würden Sie den Nutzen von der 'Stallschule' im Hinblick auf die Verbesserung der Mitarbeiterführung im eigenen Betrieb einschätzen?", 
-                                                "Wie hoch würden Sie den Nutzen von der 'Stallschule im Allgemeinen für Ihren eigenen Betrieb einschätzen?"))
+                                                "Wie hoch würden Sie den Nutzen von der 'Stallschule im Allgemeinen für Ihren eigenen Betrieb einschätzen?")) %>%
+  rename('Kein Nutzen' = 'Stimme gar nicht zu', 
+         'Geringer Nutzen' = 'Stimme nicht zu', 
+         'Hoher Nutzen' = 'Stimme zu', 
+         'Sehr hoher Nutzen' = 'Stimme sehr zu')
 
 likert1.4_1.6_dt <- likert(Item~., Per1.4_1.6_dt)
+
 
 plot(likert1.4_1.6_dt)
 ```
 
+```{r likert-plot-1.8dt}
+Q8dt$Item <- factor(Q8dt$Item, levels = unique(Q8dt$Item))
+
+likert1.8_dt <- likert(Item~., Q8dt)
+
+plot(likert1.8_dt)
+```
+
 ```{r likert-plot-1.9-1.10_dt}
-Per1.9_1.10_dt <- subset(All_count_per_dt, Item %in% c("Würden Sie sagen, dass Ihr Problembewusstsein bzgl. der Kälbergesundheitssituation im Betrieb über die Teilnahme an den 'Stallschule'-Treffen gefördert wurde?", 
-                                                "Würden Sie sagen, dass Ihr Problembewusstsein bzgl. der Mitarbeiterführungssituation im Betrieb über die Teilnahme an den 'Stallschule'-Treffen gefördert wurde?"))
+Per1.9_1.10_dt <- subset(All_count_per_dt, 
+                         Item %in% c("Würden Sie sagen, dass Ihr Problembewusstsein bzgl. der Kälbergesundheitssituation im Betrieb über die Teilnahme an den 'Stallschule'-Treffen gefördert wurde?", 
+                                     "Würden Sie sagen, dass Ihr Problembewusstsein bzgl. der Mitarbeiterführungssituation im Betrieb über die Teilnahme an den 'Stallschule'-Treffen gefördert wurde?")) %>%
+  rename('Gar nicht' = 'Stimme gar nicht zu', 
+         'Weniger deutlich' = 'Stimme nicht zu', 
+         'Deutlich' = 'Stimme zu', 
+         'Sehr deutlich' = 'Stimme sehr zu')
 
 likert1.9_1.10_dt <- likert(Item~., Per1.9_1.10_dt)
 
@@ -158,7 +202,11 @@ plot(likert1.9_1.10_dt)
 
 ```{r likert-plot-2.1-2.2_dt}
 Per2.1_2.2_dt <- subset(All_count_per_dt, Item %in% c("Im Vergleich mit anderen Beratungsmöglichkeiten zur Verbesserung der Kälbergesundheitssituation: Wie motivierend bewerten Sie das Instrument 'Stallschule'?", 
-                                                "Im Vergleich mit anderen Beratungsmöglichkeiten zur Verbesserung der Mitarbeiterführungssituation: Wie motivierend bewerten Sie das Instrument 'Stallschule'?"))
+                                                "Im Vergleich mit anderen Beratungsmöglichkeiten zur Verbesserung der Mitarbeiterführungssituation: Wie motivierend bewerten Sie das Instrument 'Stallschule'?")) %>%
+  rename('Sehr viel motivierender' = 'Stimme gar nicht zu', 
+         'Motivierender' = 'Stimme nicht zu', 
+         'Weniger motivierend' = 'Stimme zu', 
+         'Demotivierend' = 'Stimme sehr zu')
 
 likert2.1_2.2_dt <- likert(Item~., Per2.1_2.2_dt)
 
@@ -166,7 +214,11 @@ plot(likert2.1_2.2_dt)
 ```
 
 ```{r likert-plot-2.9_dt}
-Per2.9_dt <- subset(All_count_per_dt, Item == "Wie wichtig war für Sie der soziale Aspekt der 'Stallschule'?")
+Per2.9_dt <- subset(All_count_per_dt, Item == "Wie wichtig war für Sie der soziale Aspekt der 'Stallschule'?") %>%
+  rename('Sehr unwichtig' = 'Stimme gar nicht zu', 
+         'Unwichtig' = 'Stimme nicht zu', 
+         'Wichtig' = 'Stimme zu', 
+         'Sehr wichtig' = 'Stimme sehr zu')
 
 likert2.9_dt <- likert(Item~., Per2.9_dt)
 
