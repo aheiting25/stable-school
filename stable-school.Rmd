@@ -14,6 +14,8 @@ library(readxl)
 library(googlesheets4)
 #install.packages("likert")
 library(likert)
+#install.packages("ggpattern")
+library(ggpattern)
 
 #Google sheet Quantitative Analysis
 sheet_url <- "https://docs.google.com/spreadsheets/d/1ztEGQVx6-yxLz587DlWl6xOpdQvGJrqjYMRathBrU18/edit?usp=sharing"
@@ -38,6 +40,15 @@ Round1eng <- read_sheet(sheet_url_2, sheet = sheets2[1])
 Round2eng <- read_sheet(sheet_url_2, sheet = sheets2[2])
 Runde1 <- read_sheet(sheet_url_2, sheet = sheets2[3])
 Runde2<- read_sheet(sheet_url_2, sheet = sheets2[4])
+
+#Google sheet Maßnahmenumsetzung
+sheet_url_3 <- "https://docs.google.com/spreadsheets/d/1RfVEZXy_h4y9lHYxk92XjMpXt2x7T61qYMPzONCc-bA/edit?usp=sharing"
+
+sheets3 <- sheet_names(sheet_url_3)
+
+Implementation_dt <- read_sheet(sheet_url_3, sheet = sheets3[1])
+Implementation_eng <- read_sheet(sheet_url_3, sheet = sheets3[2])
+
 ```
 
 ``` {r convert-to-factor}
@@ -79,6 +90,74 @@ Q8eng_factor <- Q8eng %>%
 likert_All_dt <- likert(All_dt_factor, nlevels = 5) %>%
   summary() %>%
   as.data.frame()
+```
+
+<b>Implementation of measures<b>
+
+```{r 1.2-dt}
+
+Implementation_dt$Umsetzung <- factor(Implementation_dt$Umsetzung, levels = c("gar nicht", "teilweise", "vollständig", "zukünftig"))
+
+#Runde 1
+#Umsetzung1 <- 
+Implementation_dt %>%
+  filter(Runde == 1) %>%
+  ggplot(aes(x = Umsetzung, 
+             y = Anzahl, 
+             fill = `Problemfeld/Maßnahme`)) +
+  geom_bar(position = "stack", stat = "identity") +
+  theme_minimal() +
+  scale_fill_viridis_d()
+
+#ggsave("Umsetzung1.png", plot = Umsetzung1, width = 10, height = 6, dpi = 300)
+
+#Runde 2
+#Umsetzung2 <-
+Implementation_dt %>%
+  filter(Runde == 2) %>%
+  ggplot(aes(x = Umsetzung, 
+             y = Anzahl, 
+             fill = `Problemfeld/Maßnahme`)) +
+  geom_bar(position = "stack", stat = "identity") +
+  ylim(0, 10) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  scale_x_discrete(drop = FALSE)
+
+#ggsave("Umsetzung2.png", plot = Umsetzung2, width = 10, height = 6, dpi = 300)
+```
+
+```{r 1.2-eng}
+
+Implementation_eng$Implementation <- factor(Implementation_eng$Implementation, levels = c("not at all", "partly", "complete", "in the future"))
+
+#Round 1
+#Implementation1 <- 
+Implementation_eng %>%
+  filter(Round == 1) %>%
+  ggplot(aes(x = Implementation, 
+             y = Count, 
+             fill = `Problem area/Measure`)) +
+  geom_bar(position = "stack", stat = "identity") +
+  theme_minimal() +
+  scale_fill_viridis_d()
+
+#ggsave("Implementation1.png", plot = Implementation1, width = 10, height = 6, dpi = 300)
+
+#Round 2
+#Implementation2 <-
+Implementation_eng %>%
+  filter(Round == 2) %>%
+  ggplot(aes(x = Implementation, 
+             y = Count, 
+             fill = `Problem area/Measure`)) +
+  geom_bar(position = "stack", stat = "identity") +
+  ylim(0, 10) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  scale_x_discrete(drop = FALSE)
+
+#ggsave("Implementation2.png", plot = Implementation2, width = 10, height = 6, dpi = 300)
 ```
 
 <b>Likert bar plots in English</b>
